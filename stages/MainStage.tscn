@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://cvmkk8x4qli7f"]
+
+[ext_resource type="Script" path="res://stages/MainStage.cs" id="1_6lnbu"]
+[ext_resource type="Texture2D" uid="uid://c0wfob1kio8tx" path="res://assets/sprites/basic_player.png" id="1_n75yk"]
+[ext_resource type="Script" path="res://stages/Player.cs" id="2_qatbh"]
+[ext_resource type="Texture2D" uid="uid://cxdk8co4e5vko" path="res://assets/sprites/player_flame1.png" id="4_nxyhe"]
+[ext_resource type="Texture2D" uid="uid://bqku5ivvbm31i" path="res://assets/sprites/player_flame2.png" id="5_520yt"]
+[ext_resource type="Texture2D" uid="uid://11ky4t8vhqk6" path="res://assets/sprites/player_flame3.png" id="6_pafbq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_68q8r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_n75yk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7r0ag"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nxyhe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_520yt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pafbq")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nxyhe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_520yt")
+}],
+"loop": true,
+"name": &"Move",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_laspb"]
+size = Vector2(16, 20)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_6lnbu")
+
+[node name="Player" type="Area2D" parent="."]
+position = Vector2(320, 300)
+script = ExtResource("2_qatbh")
+Acceleration = 15.0
+metadata/_edit_group_ = true
+
+[node name="Spaceship" type="AnimatedSprite2D" parent="Player"]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_68q8r")
+animation = &"idle"
+
+[node name="Flame" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(0, 22)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_7r0ag")
+animation = &"Idle"
+frame_progress = 0.392801
+
+[node name="Hitbox" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_laspb")
+
+[node name="AttackTimer" type="Timer" parent="Player"]
+
+[node name="LeftWall" type="ColorRect" parent="."]
+modulate = Color(0.466667, 0.466667, 0.466667, 1)
+offset_right = 128.0
+offset_bottom = 360.0
+
+[node name="RightWall" type="ColorRect" parent="."]
+modulate = Color(0.466667, 0.466667, 0.466667, 1)
+offset_left = 512.0
+offset_right = 640.0
+offset_bottom = 360.0
